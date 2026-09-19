@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A tiny question</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #26313a;
+      --muted: #68737a;
+      --paper: #fffaf1;
+      --coral: #ef765f;
+      --yellow: #f5ca68;
+      --sage: #b9d5c1;
+      --blue: #b7d6df;
+      --line: rgba(38, 49, 58, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--ink);
+      background: #f3c7bb;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .page {
+      width: min(100% - 34px, 1050px);
+      min-height: 100vh;
+      margin: auto;
+      padding: 28px 0;
+    }
+
+    .scrapbook {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(220px, .82fr) minmax(0, 1.18fr);
+      min-height: calc(100vh - 56px);
+      overflow: hidden;
+      background: rgba(255, 250, 241, .92);
+      box-shadow: 12px 14px 0 rgba(38, 49, 58, .12);
+      animation: enter .8s ease both;
+    }
+
+    .visuals {
+      position: relative;
+      min-height: 620px;
+      padding: 34px;
+      background: var(--sage);
+      border-right: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .label {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+      font-size: .73rem;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .question {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(34px, 7vw, 88px);
+    }
+
+    .eyebrow { margin: 0 0 20px; color: var(--coral); font-size: .76rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { max-width: 560px; margin: 0; font-family: 'Playfair Display', serif; font-size: clamp(3.9rem, 8vw, 7.5rem); line-height: .9; letter-spacing: -.055em; }
+    h1 em { color: var(--coral); font-style: normal; }
+    .copy { max-width: 390px; margin: 28px 0 0; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
+
+    .actions { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 14px; min-height: 150px; margin-top: 30px; }
+    button { border: 0; font: inherit; font-weight: 700; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease, background .25s ease; }
+    button:focus-visible { outline: 3px solid var(--ink); outline-offset: 4px; }
+    .yes { position: relative; z-index: 2; padding: 16px 27px; border-radius: 999px; color: var(--paper); background: var(--coral); box-shadow: 0 8px 0 #cc5e4e; font-size: 1rem; transform-origin: left center; }
+    .yes:hover { box-shadow: 0 5px 0 #cc5e4e; transform: translateY(3px) scale(1.04); }
+    .no { padding: 12px 8px; color: var(--muted); background: transparent; font-size: .9rem; }
+    .no:hover { color: var(--ink); }
+
+    .success { display: none; }
+    .accepted .question > *:not(.success) { display: none; }
+    .accepted .success { display: block; animation: rise .6s ease both; }
+    .success h2 { margin: 0; font-family: 'Playfair Display', serif; font-size: clamp(3rem, 6vw, 5.5rem); line-height: .95; }
+    .success h2 span { color: var(--coral); }
+    .success p { max-width: 350px; margin: 24px 0 0; color: var(--muted); line-height: 1.7; }
+    .heart { display: inline-block; margin-top: 28px; color: var(--coral); font-size: 3rem; animation: pulse 1s ease-in-out infinite; }
+
+    @keyframes enter { from { opacity: 0; transform: translateY(18px) rotate(-1deg); } to { opacity: 1; transform: translateY(0) rotate(-1deg); } }
+    @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 50% { transform: scale(1.15) rotate(-7deg); } }
+
+    @media (max-width: 720px) {
+      .page { width: min(100% - 20px, 520px); padding: 10px 0; }
+      .scrapbook { display: block; min-height: calc(100vh - 20px); transform: none; }
+      .visuals { min-height: 330px; padding: 24px; border-right: 0; border-bottom: 1px solid var(--line); }
+      .question { min-height: 480px; padding: 46px 28px 55px; }
+      h1 { font-size: clamp(3.7rem, 17vw, 6rem); }
+      .actions { min-height: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="scrapbook" id="card">
+      <div class="question">
+        <p class="eyebrow">One very important question</p>
+        <h1>Wanna be <em>frnds?</em></h1>
+        <p class="copy">Life is better with someone to laugh with, send random thoughts to, and make tiny memories with.</p>
+        <div class="actions">
+          <button class="yes" id="yes" type="button">Yes, absolutely!</button>
+          <button class="no" id="no" type="button">No</button>
+        </div>
+        <div class="success" aria-live="polite">
+          <h2>Yay! We are <span>frnds.</span></h2>
+          <p>Officially confirmed. I am looking forward to all the laughs, little adventures, and wonderfully random conversations.</p>
+          <span class="heart" aria-hidden="true">♥</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const card = document.getElementById('card');
+    const yesButton = document.getElementById('yes');
+    const noButton = document.getElementById('no');
+    let yesScale = 1;
+    let noClicks = 0;
+
+    noButton.addEventListener('click', () => {
+      noClicks += 1;
+      yesScale = Math.min(yesScale + 0.35, 4.8);
+      yesButton.style.transform = `scale(${yesScale})`;
+      yesButton.setAttribute('aria-label', `Yes, absolutely! Size ${Math.round(yesScale * 100)} percent`);
+      noButton.textContent = yesScale >= 3.4 ? 'okay okay...' : 'No';
+      if (noClicks >= 20) {
+        noButton.style.display = 'none';
+      }
+    });
+
+    yesButton.addEventListener('click', () => {
+      card.classList.add('accepted');
+    });
+  </script>
+</body>
+</html>
